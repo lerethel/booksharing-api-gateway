@@ -1,0 +1,16 @@
+services:
+  booksharing-gateway:
+    image: booksharing-gateway
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file: ./.env
+    ports:
+      - 3000:3000
+    networks:
+      - booksharing
+    command: npm run start
+
+networks:
+  booksharing:
+    name: booksharing
