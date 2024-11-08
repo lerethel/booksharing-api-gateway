@@ -16,15 +16,15 @@ export class UserService {
     return this.client.send({ cmd: 'createUser' }, { dto });
   }
 
-  updateName(dto: Record<string, any>, id: number) {
+  updateName(dto: Record<string, any>, id: unknown) {
     return this.client.send({ cmd: 'updateUserName' }, { dto, id });
   }
 
-  updateEmail(dto: Record<string, any>, id: number) {
+  updateEmail(dto: Record<string, any>, id: unknown) {
     return this.client.send({ cmd: 'updateUserEmail' }, { dto, id });
   }
 
-  updatePassword(dto: Record<string, any>, id: number) {
+  updatePassword(dto: Record<string, any>, id: unknown) {
     return this.client.send({ cmd: 'updateUserPassword' }, { dto, id });
   }
 

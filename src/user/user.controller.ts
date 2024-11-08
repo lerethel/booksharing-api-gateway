@@ -14,19 +14,19 @@ export class UserController {
 
   @Put('name')
   @Auth()
-  updateName(@Body() dto: Record<string, any>, @User() id: number) {
+  updateName(@Body() dto: Record<string, any>, @User() id: unknown) {
     return this.userService.updateName(dto, id);
   }
 
   @Put('email')
   @Auth()
-  updateEmail(@Body() dto: Record<string, any>, @User() id: number) {
+  updateEmail(@Body() dto: Record<string, any>, @User() id: unknown) {
     return this.userService.updateEmail(dto, id);
   }
 
   @Put('password')
   @Auth()
-  updatePassword(@Body() dto: Record<string, any>, @User() id: number) {
+  updatePassword(@Body() dto: Record<string, any>, @User() id: unknown) {
     return this.userService.updatePassword(dto, id);
   }
 
