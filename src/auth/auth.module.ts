@@ -17,7 +17,10 @@ import { AuthService } from './auth.service';
   ],
   controllers: [AuthController],
   providers: [AuthService],
-  // This makes the guard available to other modules.
-  exports: [ClientsModule, AuthService],
+  exports: [
+    AuthService,
+    // This makes the auth guard available to other modules.
+    ClientsModule,
+  ],
 })
 export class AuthModule {}

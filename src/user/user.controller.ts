@@ -1,12 +1,5 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  Post,
-  Put,
-  UseGuards,
-} from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { Body, Controller, HttpCode, Post, Put } from '@nestjs/common';
+import { Auth } from 'src/common/decorators/auth.decorator';
 import { User } from 'src/common/decorators/user.decorator';
 import { UserService } from './user.service';
 
@@ -20,26 +13,26 @@ export class UserController {
   }
 
   @Put('name')
-  @UseGuards(AuthGuard)
+  @Auth()
   updateName(@Body() dto: Record<string, any>, @User() id: number) {
     return this.userService.updateName(dto, id);
   }
 
   @Put('email')
-  @UseGuards(AuthGuard)
+  @Auth()
   updateEmail(@Body() dto: Record<string, any>, @User() id: number) {
     return this.userService.updateEmail(dto, id);
   }
 
   @Put('password')
-  @UseGuards(AuthGuard)
+  @Auth()
   updatePassword(@Body() dto: Record<string, any>, @User() id: number) {
     return this.userService.updatePassword(dto, id);
   }
 
   @Post('delete')
   @HttpCode(200)
-  @UseGuards(AuthGuard)
+  @Auth()
   remove(@Body() dto: Record<string, any>, @User() id: unknown) {
     return this.userService.remove(dto, id);
   }

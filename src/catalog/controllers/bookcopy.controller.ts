@@ -1,12 +1,5 @@
-import {
-  Body,
-  Controller,
-  Param,
-  Patch,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { Auth } from 'src/common/decorators/auth.decorator';
 import { User } from 'src/common/decorators/user.decorator';
 import { BookcopyService } from '../services/bookcopy.service';
 import { BaseCatalogController } from './base/base-catalog.controller';
@@ -18,13 +11,13 @@ export class BookcopyController extends BaseCatalogController<BookcopyService> {
   }
 
   @Post()
-  @UseGuards(AuthGuard)
+  @Auth()
   create(@Body() dto: Record<string, any>, @User() owner: unknown) {
     return this.service.create(dto, owner);
   }
 
   @Patch(':id/loan')
-  @UseGuards(AuthGuard)
+  @Auth()
   loan(
     @Param('id') id: string,
     @Body('borrower') borrower: unknown,
@@ -34,7 +27,7 @@ export class BookcopyController extends BaseCatalogController<BookcopyService> {
   }
 
   @Patch(':id/return')
-  @UseGuards(AuthGuard)
+  @Auth()
   return(@Param('id') id: string, @User() owner: unknown) {
     return this.service.return(id, owner);
   }

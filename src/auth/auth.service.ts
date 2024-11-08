@@ -45,7 +45,7 @@ export class AuthService {
     return this.client.send({ cmd: 'logout' }, {});
   }
 
-  logoutEverywhere(user: unknown) {
-    return this.client.send({ cmd: 'logoutEverywhere' }, { user });
+  logoutEverywhere(id: unknown) {
+    return this.client.send({ cmd: 'logoutEverywhere' }, { id });
   }
 }

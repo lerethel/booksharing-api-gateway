@@ -1,22 +1,14 @@
-import {
-  Body,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { Body, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Auth } from 'src/common/decorators/auth.decorator';
 import { User } from 'src/common/decorators/user.decorator';
+import { UserRoles } from 'src/common/enums/user-roles.enum';
 import { BaseCatalogService } from './base-catalog-service.interface';
 
 export abstract class BaseCatalogController<T extends BaseCatalogService> {
   constructor(protected readonly service: T) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  @Auth()
   create(@Body() dto: Record<string, any>, @User() owner?: unknown) {
     return this.service.create(dto, owner);
   }
@@ -32,13 +24,13 @@ export abstract class BaseCatalogController<T extends BaseCatalogService> {
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @Auth()
   update(@Param('id') id: string, @Body() dto: Record<string, any>) {
     return this.service.update(id, dto);
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @Auth(UserRoles.Editor)
   remove(@Param('id') id: string) {
     return this.service.remove(id);
   }
