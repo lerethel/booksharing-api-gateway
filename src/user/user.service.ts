@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from 'src/auth/auth.service';
 import { BookcopyService } from 'src/catalog/services/bookcopy.service';
+import { UserRoles } from 'src/common/enums/user-roles.enum';
 
 @Injectable()
 export class UserService {
@@ -26,6 +27,16 @@ export class UserService {
 
   updatePassword(dto: Record<string, any>, id: unknown) {
     return this.client.send({ cmd: 'updateUserPassword' }, { dto, id });
+  }
+
+  async updateRole(role: UserRoles, id: string) {
+    await Promise.all([
+      lastValueFrom(this.client.send({ cmd: 'updateUserRole' }, { role, id })),
+      // Since the auth microservice doesn't know the id type and doesn't validate it,
+      // try converting the id to a number and roll back if it's not a number.
+      lastValueFrom(this.authService.updateRole(+id || id, role)),
+    ]);
+    return null;
   }
 
   async remove(dto: Record<string, any>, id: unknown) {
